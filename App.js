@@ -1,53 +1,53 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {Button, Text, View, TextInput} from 'react-native';
+import React from 'react';
+import {SectionList, StyleSheet, Text, View} from 'react-native';
 
-const PizzaTranslator = () => {
-  const [text, setText] = useState('');
-  return (
-    <View style={{padding: 10}}>
-      <TextInput
-        style={{height: 40}}
-        placeholder="Type here to translate!"
-        onChangeText={(text) => setText(text)}
-        defaultValue={text}
-      />
-      <Text style={{padding: 10, fontSize: 42}}>
-        {text
-          .split(' ')
-          .map((word) => word && '🍕')
-          .join(' ')}
-      </Text>
-    </View>
-  );
-}
-
-const Cat = (props) => {
-  const [isHungry, setIsHungry] = useState(true);
-
-  return (
-    <View>
-      <Text>
-        I am {props.name}, and I am {isHungry ? 'hungry' : 'full'}!
-      </Text>
-      <Button
-        onPress={() => {
-          setIsHungry(false);
-        }}
-        disabled={!isHungry}
-        title={isHungry ? 'Pour me some milk, please!' : 'Thank you!'}
-      />
-    </View>
-  );
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 22,
+  },
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 14,
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(247,247,247,1.0)',
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+});
 
 const App = () => {
   return (
-    <>
-      <Cat name="Munkustrap" />
-      <Cat name="Spot" />
-      <PizzaTranslator />
-    </>
+    <View style={styles.container}>
+      <SectionList
+        sections={[
+          {title: 'D', data: ['Devin', 'Dan', 'Dominic']},
+          {
+            title: 'J',
+            data: [
+              'Jackson',
+              'James',
+              'Jillian',
+              'Jimmy',
+              'Joel',
+              'John',
+              'Julie',
+            ],
+          },
+        ]}
+        renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+        renderSectionHeader={({section}) => (
+          <Text style={styles.sectionHeader}>{section.title}</Text>
+        )}
+        keyExtractor={(item, index) => index}
+      />
+    </View>
   );
 };
 
